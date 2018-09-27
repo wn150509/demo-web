@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模糊查询结果降序</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container" th:each="com:${order}">
+    <h2 th:text="${com.counts}"></h2>
+    <div class="col-md-12 alert alert-success">
+        <div style="margin-left: 30px">
+            <h3 th:text="${com.name}"></h3>
+        </div>
+        <div>
+            <div class="col-lg-4 cardright">
+                <img th:src="${com.picture}" class="picture">
+            </div>
+            <div class="col-lg-8 cardleft">
+                <p th:text="${com.author}" class="author"></p>
+                <span th:text="${com.type}"></span>
+                <p th:text="${com.info}"class="info"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

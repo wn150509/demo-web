@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>模糊查询一组数据</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container" th:each="com:${contain}">
+    <div class="col-md-12 alert alert-success">
+        <div style="margin-left: 30px">
+            <h3 th:text="${com.name}"></h3>
+        </div>
+        <div>
+            <div class="col-lg-4 cardright">
+                <img th:src="${com.picture}" class="picture">
+            </div>
+            <div class="col-lg-8 cardleft">
+                <p th:text="${com.author}" class="author"></p>
+                <span th:text="${com.type}"></span>
+                <p th:text="${com.info}"class="info"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

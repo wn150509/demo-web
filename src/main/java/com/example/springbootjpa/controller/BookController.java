@@ -1,6 +1,5 @@
 package com.example.springbootjpa.controller;
 
-import com.example.springbootjpa.entity.Book;
 import com.example.springbootjpa.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/book")
@@ -18,6 +16,9 @@ public class BookController {
 
     private static final String BOOK_DETAIL_PATH_NAME = "bookDetail";
     private static final String BOOK_LIST_PATH_NAME = "bookList";
+    private static final String BOOK_NAME="bookname";
+    private static final String BOOK_CONTAIN="contain";
+    private static final String BOOK_ORDER="order";
     @Resource
     private BookService bookService;
 
@@ -33,7 +34,18 @@ public class BookController {
         return BOOK_DETAIL_PATH_NAME;
     }
     @GetMapping("/name")
-    public String getBook(ModelMap modelMap){
-
+    public String getBook(ModelMap modelMap,String name){
+        modelMap.addAttribute("bookname",bookService.findByName(name));
+        return BOOK_NAME;
+    }
+    @GetMapping("/contain")
+    public String getContain(ModelMap modelMap,String keyword){
+        modelMap.addAttribute("contain",bookService.findByTypeIsContaining(keyword));
+        return BOOK_CONTAIN;
+    }
+    @GetMapping("/order")
+    public String getorder(ModelMap modelMap,String key){
+        modelMap.addAttribute("order",bookService.findBook(key));
+        return BOOK_ORDER;
     }
 }

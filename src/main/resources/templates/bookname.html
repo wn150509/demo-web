@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>根据图书名称获取图书信息</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h3>Spring Data JPA进阶练习 </h3>
+    <legend>
+        <strong>书籍详情</strong>
+    </legend>
+    <div class="col-md-12 alert alert-success">
+        <div style="margin-left: 30px">
+            <h3 th:text="${bookname.name}"></h3>
+        </div>
+        <div>
+            <div class="col-lg-4 cardright">
+                <img th:src="${bookname.picture}" class="picture">
+            </div>
+            <div class="col-lg-8 cardleft">
+                <p th:text="${bookname.author}" class="author"></p>
+                <span th:text="${bookname.type}"></span>
+                <p th:text="${bookname.info}"class="info"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
