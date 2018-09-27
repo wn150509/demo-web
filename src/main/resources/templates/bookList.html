@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书列表</title>
+    <!--<script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>-->
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+    <style>
+        img{
+            width: 150px;
+            height: 200px;
+        }
+        tbody tr td{
+            vertical-align: middle;
+            text-align: inherit;
+        }
+        .author{
+            font-size: 20px;
+        }
+        .info{
+            margin-top: 20px;
+        }
+        .one{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<!--<div class="container">-->
+<div style="margin-left: 80px">
+    <h3>Spring Data JPA练习 </h3>
+    <!--<table class="table table-hover table-condensed">-->
+    <h4>书籍列表</h4>
+</div>
+<legend></legend>
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th>书籍编号</th>-->
+            <!--<th>图片</th>-->
+            <!--<th>书名</th>-->
+            <!--<th>作者</th>-->
+            <!--<th>简介</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr th:each="book : ${bookList}">-->
+            <!--<th scope="row" th:text="${book.id}"></th>-->
+            <!--<td><img th:src="${book.picture}"></td>-->
+            <!--<td><a th:href="@{/book/{bookId}(bookId=${book.id})}" th:text="${book.name}"></a></td>-->
+            <!--<td th:text="${book.author}"></td>-->
+            <!--<td th:text="${book.info}"></td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
+<!--</div>-->
+<!--<div class="container" style="margin-left: 300px;">-->
+    <!--<div class="col-md-8 alert alert-success" th:each="book:${bookList}">-->
+        <!--<div style="margin-left: 30px">-->
+            <!--<h3 th:text="${book.name}"></h3>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<div class="col-lg-4 cardright">-->
+                <!--<a th:href="@{/book/{bookId}(bookId=${book.id})}"><img th:src="${book.picture}" class="picture"></a>-->
+            <!--</div>-->
+            <!--<div class="col-lg-8 cardleft">-->
+                <!--<p th:text="${book.author}" class="author"></p>-->
+                <!--<span th:text="${book.type}">( )</span>-->
+                <!--<p th:text="${book.info}"class="info"></p>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="container">
+    <div class="col-md-4 one" th:each="book:${bookList}" >
+        <div>
+            <a th:href="@{/book/{bookId}(bookId=${book.id})}"><img th:src="${book.picture}" class="picture"></a>
+        </div>
+        <h3 th:text="${book.name}"></h3>
+    </div>
+</div>
+</body>
+</html>
