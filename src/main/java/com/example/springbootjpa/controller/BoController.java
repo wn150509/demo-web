@@ -1,28 +1,34 @@
 package com.example.springbootjpa.controller;
 
+import com.example.springbootjpa.entity.Album;
+import com.example.springbootjpa.entity.AlbumCatena;
 import com.example.springbootjpa.entity.Book;
+import com.example.springbootjpa.service.AlbumCatenaService;
+import com.example.springbootjpa.service.AlbumService;
 import com.example.springbootjpa.service.BookService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/books")
 public class BoController {
     @Resource
     private BookService bookService;
+    @Resource
+    private AlbumService albumService;
+    @Resource
+    private AlbumCatenaService albumCatenaService;
     @GetMapping("/all")
     public List<Book>getall(){
         return bookService.getall();
     }
-    @GetMapping("/{id}")
-    public Book getbyid(@PathVariable Integer id){
-        return bookService.getbyid(id);
-    }
+//    @GetMapping("/{id}")
+//    public Book getbyid(@PathVariable Integer id){
+//        return bookService.getbyid(id);
+//    }
     @GetMapping("/name")
     public Book getbyname(String name){
         return bookService.findByName(name);
@@ -35,5 +41,14 @@ public class BoController {
     public List<Book>getbook(String key){
         return bookService.findBook(key);
     }
+    @GetMapping("/album")
+    public List<Album>getallalbum(){
+        return albumService.getall();
+    }
 
+    @GetMapping("/{id}")
+    public List<AlbumCatena>getcatenas(@PathVariable Integer id){
+        System.out.println(albumCatenaService.findAlbumCatenas(id));
+        return albumCatenaService.findAlbumCatenas(id);
+    }
 }

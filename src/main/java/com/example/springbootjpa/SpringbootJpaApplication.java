@@ -11,9 +11,3 @@ public class SpringbootJpaApplication {
 		SpringApplication.run(SpringbootJpaApplication.class, args);
 	}
 }
-
-//public class Springboot2Swagger2Application {
-//	public static void main(String[] args) {
-//		SpringApplication.run(SpringbootSwaggeer2Application.class, args);
-//	}
-//}
