@@ -1,13 +1,13 @@
-package com.example.springbootjpa;
+package com.demo;
 
 import com.spring4all.swagger.EnableSwagger2Doc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @EnableSwagger2Doc
-public class SpringbootJpaApplication {
+public class DemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootJpaApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
 	}
 }
