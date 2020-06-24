@@ -1,5 +1,7 @@
 package com.demo.util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.util.Random;
 
@@ -97,14 +99,20 @@ public class MD5Util {
 
 
 
-    public static void main(String[] args) {
-        // 原密码
-        String plaintext = "123456";
+    public static void main(String[] args) throws UnknownHostException {
+        InetAddress id= InetAddress.getLocalHost();
+        String ip=id.getHostAddress();//获取主机名称
+        String computerName= id.getHostName();//获取ip地址
+        System.out.println("用户访问的ip\t:"+ip);
+        System.out.println("主机名称\t:"+computerName);
 
-        // 获取加盐后的MD5值
-        String ciphertext = MD5Util.getSaltMD5(plaintext);
-        System.out.println("加盐后MD5：" + ciphertext);
-        System.out.println("是否是同一字符串:" + MD5Util.getSaltverifyMD5("123", ciphertext));
+        // 原密码
+//        String plaintext = "123456";
+//
+//        // 获取加盐后的MD5值
+//        String ciphertext = MD5Util.getSaltMD5(plaintext);
+//        System.out.println("加盐后MD5：" + ciphertext);
+//        System.out.println("是否是同一字符串:" + MD5Util.getSaltverifyMD5("123", ciphertext));
     }
 
 }

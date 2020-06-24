@@ -1,13 +1,19 @@
 package com.demo.service.impl;
 
+import com.demo.dao.UserLoginLogRepository;
 import com.demo.dao.UserRepository;
 import com.demo.entity.User;
 import com.demo.entity.UserLogin;
+import com.demo.entity.UserLoginLog;
 import com.demo.service.UserService;
 import com.demo.util.ResponseUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,8 +24,10 @@ import java.util.Random;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserRepository userRepository;
+    @Resource
+    private UserLoginLogRepository userLoginLogRepository;
     @Override
-    public ResponseUtil UserRegister(User user){
+    public ResponseUtil UserRegister(User user){//用户注册实现类
         if(userRepository.findUserByCellphone(user.getCellphone())!=null){
             return new ResponseUtil(1,"该账户已注册,请您选择登录");//判断是否已注册
         }else {
@@ -32,29 +40,42 @@ public class UserServiceImpl implements UserService {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            user.setCreateTime(time);
-            user.setState(1);
-            user.setSalt(getSalt());
-            user.setPassword(getSaltMD5(user.getPassword()));
-            userRepository.save(user);
+            user.setCreateTime(time);//给定注册时间
+            user.setState(1);//注册状态
+            user.setSalt(getSalt());//获取随机盐
+            user.setPassword(getSaltMD5(user.getPassword()));//加盐后密码
+            userRepository.save(user);//保存用户信息
             return new ResponseUtil(0,"注册成功",user);
         }
     }
 
     @Override
-    public ResponseUtil UserLogin(UserLogin userLogin) {
+    public ResponseUtil UserLogin(UserLogin userLogin) {//用户登录实现
         User user=userRepository.findUserByCellphone(userLogin.getPhone());
-        if(user!=null){
-            if(getSaltverifyMD5(userLogin.getPassword(),user.getPassword())){
-                return new ResponseUtil(0,"登录成功",user);
-            }else {
+        if(user!=null){//判断是否有该用户
+            if(getSaltverifyMD5(userLogin.getPassword(),user.getPassword())){//比对密码成功
+                UserLoginLog userLoginLog=new UserLoginLog();
+                userLoginLog.setLoginIp(userLogin.getIp());//获取登录用户ip
+                Date date = new Date();//获得系统时间.
+                SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+                String nowTime = sdf.format(date);
+                Date time = null;
+                try {
+                    time = sdf.parse( nowTime );
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                userLoginLog.setLoginTime(time);//获取登录时间
+                userLoginLog.setUserId(user.getUserId());//获取登录用户id
+                userLoginLogRepository.save(userLoginLog);//保存登录用户记录
+                return new ResponseUtil(0,"登录成功",userLoginLog);
+            }else {                                                 //比对密码失败
                 return new ResponseUtil(1,"密码错误");
             }
-        }else {
+        }else {                                                     //无该用户
             return new ResponseUtil(2,"请先注册账号");
         }
     }
-
 
     /**
      * byte[]字节数组 转换成 十六进制字符串
