@@ -8,4 +8,6 @@ public interface UserService {
     ResponseUtil UserRegister(User user);//用户注册
 
     ResponseUtil UserLogin(UserLogin userLogin);//用户登录
+
+    ResponseUtil LoginLog(Integer id);//用户登录记录
 }

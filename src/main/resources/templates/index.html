@@ -1,0 +1,109 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Creating a table with Bootstrap. Learn how to use Bootstrap toolkit to create Tables with examples.">
+	<title>用户登录记录表</title>
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+	<!--响应式框架-->
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap-grid.min.css" />
+<!--图标调用-->
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--	引入jQuery-->
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!--主要样式-->
+<style>
+.demo{padding: 2em 0;}
+:root{
+	--color_1: #fff;
+	--main-color: #1dd1a1;
+}
+.box{
+	font-family: 'Niramit', sans-serif;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+}
+.box:before,
+.box:after,
+.box:after{ left: 25%; }
+.box img{
+	width: 100%;
+	height: auto;
+	transition: all 0.3s ease 0s;
+}
+@media only screen and (max-width:990px){
+	.box{ margin-bottom: 30px; }
+}
+.navbar{
+	background: #07c4a8;
+}
+.navbar-header{
+	height: 80px;
+	line-height: 80px;
+	vertical-align: middle;
+}
+</style>
+	<script>
+		$(document).ready(function () {
+			var localStorage =window.localStorage;
+			var user=JSON.parse(localStorage.getItem("userlog"));
+			$.ajax({
+				contentType:"application/json;charset=UTF-8",
+				url:"http://localhost:8080/user/loginLog",
+				data: JSON.stringify({
+					"userId":user.userId
+				}),
+				type:"post",
+				success:function (re) {
+					var time=re.data[0].loginTime;
+					console.log(renderTime(time));
+					var inf="<table class='table' >";
+					inf+="<tr><th>id</th><th>IP地址</th><th>登录时间</th></tr>";
+					for (var i=0;i<re.data.length;i++){
+						var stu=re.data[i];
+						inf+="<tr><td>"+stu.loginId+"</td><td>"+stu.loginIp+"</td><td>"+renderTime(stu.loginTime)+"</td></tr>";
+					}
+					inf+="</table>";
+					$(".kuan").html(inf);
+				}
+			})
+		})
+	</script>
+	<script>
+		function renderTime(date) {
+			var dateee = new Date(date).toJSON();
+			return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+		}
+	</script>
+</html>
+</head>
+<body>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<h2>用户登录记录展示</h2>
+		</div>
+	</div>
+</nav>
+<div class="demo">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2 col-sm-6">
+			</div>
+			<div class="col-md-8 col-sm-6">
+				<div class="box">
+					<div class="kuan">
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-6">
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

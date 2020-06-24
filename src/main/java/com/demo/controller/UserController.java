@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin
 @RequestMapping(value = "user")
+@CrossOrigin
 public class UserController {
     @Resource
     private UserService userService;
@@ -30,6 +29,11 @@ public class UserController {
         UserLogin userLogin=new UserLogin(request.getParameter("phone")
                 ,request.getParameter("password"),getIpAddr(request));
         return userService.UserLogin(userLogin);
+    }
+
+    @RequestMapping(value = "/loginLog",method = RequestMethod.POST)
+    ResponseUtil loginLog(@RequestBody User user){
+        return userService.LoginLog(user.getUserId());
     }
 
     /**

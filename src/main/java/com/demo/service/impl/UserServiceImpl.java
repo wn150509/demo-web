@@ -18,6 +18,7 @@ import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -75,6 +76,12 @@ public class UserServiceImpl implements UserService {
         }else {                                                     //无该用户
             return new ResponseUtil(2,"请先注册账号");
         }
+    }
+
+    @Override
+    public ResponseUtil LoginLog(Integer id) {
+        List<UserLoginLog>userLoginLogs=userLoginLogRepository.findAllByUserId(id);
+        return new ResponseUtil(0,"获取登录记录成功",userLoginLogs);
     }
 
     /**
